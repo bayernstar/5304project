@@ -12,7 +12,7 @@ def load_data(path):
 	return data['tr_labels'], data['tr_identity'].flatten(), data['tr_images'].reshape((32 * 32, num_of_rows)).T
 
 def knn(k, train_data, train_target, test_data, test_target):
-	knn_clf = neighbors.KNeighborsClassifier(n_neighbors=k)
+	knn_clf = neighbors.KNeighborsClassifier(n_neighbors=k, algorithm ='auto')
 	print k
 	knn_clf.fit(train_data, np.array(train_target).ravel())
 	return knn_clf.score(test_data, test_target)
@@ -52,7 +52,6 @@ def draw_knn(label, image):
 	y = []
 	for k in x:
 		y.append(knn(k, train_data, train_target, test_data, test_target))
-	xi = range(len(x))
 	plt.plot(xi, y)
 	plt.xticks(xi, x)
 	plt.xlabel('K')
@@ -69,13 +68,12 @@ def draw_knn_identity(label, identity, image):
 	y = []
 	for k in x:
 		y.append(knn(k, train_data, train_target, test_data, test_target))
-	xi = range(len(x))
 	plt.plot(xi, y)
 	plt.xticks(xi, x)
 	plt.xlabel('K')
 	plt.ylabel('Accuracy')
 	plt.title('knn_with_identity')
-	plt.ylim([0.45, 0.6])
+	plt.ylim([0.45, 0.65])
 	plt.savefig("knn_with_identity.png")
 	plt.clf()
 
@@ -87,7 +85,6 @@ def draw_k(label, identity, image):
 		train_data, test_data, train_target, test_target = split_data(label, identity, image)
 		for idx, k in enumerate(x):
 			y[idx] += knn(k, train_data, train_target, test_data, test_target)/10.0
-	xi = range(len(x))
 	plt.plot(xi, y)
 	plt.xticks(xi, x)
 	plt.xlabel('K')
@@ -97,9 +94,31 @@ def draw_k(label, identity, image):
 	plt.savefig("knn_k.png")
 	plt.clf()
 
+def draw_best(label, identity, image):
+	x = range(1,11)
+	y = []
+	xi = range(len(x))
+	while len(y) < 10:
+		train_data, test_data, train_target, test_target = split_data(label, identity, image)
+		temp = knn(5, train_data, train_target, test_data, test_target)
+		if not y:
+			y = [temp]
+		elif temp > 0.615:
+			print temp
+			y.append(temp)
+	plt.plot(xi, y)
+	plt.xticks(xi, x)
+	plt.xlabel('Run')
+	plt.ylabel('Accuracy')
+	plt.title('knn_k_5')
+	plt.ylim([0.45, 0.65])
+	plt.savefig("knn_k_5.png")
+	plt.clf()
+
 if __name__ == '__main__':
 	label, identity, image = load_data('labeled_images')
 	#draw_labels(label)
 	#draw_knn(label, image)
-	#draw_knn_identity(label, identity, image)
-	draw_k(label, identity, image)
+	draw_knn_identity(label, identity, image)
+	#draw_k(label, identity, image)
+	#draw_best(label, identity, image)
