@@ -32,6 +32,21 @@ def svc_rbf(train_data, train_target, test_data, test_target):
 	rbf_clf.fit(train_data, np.array(train_target).ravel())
 	return rbf_clf.score(test_data, test_target)
 
+def draw_svc_rbf_label(label, identity, image):
+	x = range(1,11)
+	y = []
+	for c in x:
+		train_data, test_data, train_target, test_target = load.split_data(label, identity, image)
+		train_data,test_data = load.pca_data(train_data, train_data, test_data)
+		y.append(svc_rbf(train_data, train_target, test_data, test_target))
+	plt.plot(x, y)
+	plt.xlabel('Run')
+	plt.ylabel('Accuracy')
+	plt.title('svc_rbf_label')
+	plt.ylim([0.70, 0.80])
+	plt.savefig("svc_rbf_label.png")
+	plt.clf()
+
 def draw_svc_rbf(label, identity, image, image_unlabel):
 	x = range(1,11)
 	y = []

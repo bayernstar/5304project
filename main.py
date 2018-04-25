@@ -18,4 +18,5 @@ if __name__ == '__main__':
 	#project2
 	#lr.draw_lr(label, identity, image)
 	#svc.draw_svc_linear(label, identity, image)
-	svc.draw_svc_rbf(label, identity, image, image_unlabel)
+	svc.draw_svc_rbf_label(label, identity, image)
+	#svc.draw_svc_rbf(label, identity, image, image_unlabel)
