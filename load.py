@@ -5,10 +5,13 @@ from sklearn.decomposition import PCA
 num_of_rows = 2925
 num_of_rows_unlabel = 98058
 
-def load_data(path, label=True):
+def load_data(path, label=True, identity=True):
 	data = loadmat(path)
 	if label:
-		return data['tr_labels'], data['tr_identity'].flatten(), data['tr_images'].reshape((32 * 32, num_of_rows)).T
+		if identity:
+			return data['tr_labels'], data['tr_identity'].flatten(), data['tr_images'].reshape((32 * 32, num_of_rows)).T
+		else:
+			return data['tr_labels'], data['tr_images'].reshape((32 * 32, 72799)).T
 	else:
 		return data['unlabeled_images'].reshape((32 * 32, num_of_rows_unlabel )).T
 

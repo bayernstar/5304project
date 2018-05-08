@@ -61,3 +61,9 @@ def draw_svc_rbf(label, identity, image, image_unlabel):
 	plt.ylim([0.70, 0.80])
 	plt.savefig("svc_rbf.png")
 	plt.clf()
+
+def get_svc_linear(label, identity, image):
+	train_data, test_data, train_target, test_target = load.split_data(label, identity, image)
+	ovr_clf = OneVsRestClassifier(LinearSVC(C=1))
+	ovr_clf.fit(train_data, np.array(train_target).ravel())
+	return ovr_clf
