@@ -21,7 +21,7 @@ def split_data(label, identity, image):
 	test_data = []
 	train_target = []
 	test_target = []
-	train, _ = train_test_split(identity_set, test_size=0.2)
+	train, _ = train_test_split(identity_set, test_size=0.1)
 	for i in range(num_of_rows):
 		if identity[i] in train:
 			train_data.append(image[i])
