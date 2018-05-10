@@ -3,13 +3,8 @@ import load
 import lr
 import svc
 import semi
-from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
-from sklearn import neighbors
-import numpy as np
-from scipy.io import savemat
-from sklearn.semi_supervised import LabelPropagation
+import ensemble
+import mlp
 
 if __name__ == '__main__':
 	label, identity, image = load.load_data('labeled_images')
@@ -29,4 +24,7 @@ if __name__ == '__main__':
 	svc.draw_svc_rbf(label, identity, image, image_unlabel)
 	"""
 	#project3
-	semi.draw_lp(label, identity, image, image_unlabel)
+	#semi.draw_lp(label, identity, image, image_unlabel)
+	#semi.draw_nb(label, identity, image, image_unlabel)
+	mlp.mlp(label, identity, image, image_unlabel)
+	#ensemble.draw_ensemble(label, identity, image, image_unlabel)
