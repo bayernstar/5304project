@@ -27,4 +27,5 @@ if __name__ == '__main__':
 	#semi.draw_lp(label, identity, image, image_unlabel)
 	#semi.draw_nb(label, identity, image, image_unlabel)
 	#mlp.mlp(label, identity, image, image_unlabel)
-	ensemble.draw_ensemble(label, identity, image, image_unlabel)
+	#ensemble.draw_ensemble(label, identity, image, image_unlabel)
+	lr.visualize(label, identity, image)
